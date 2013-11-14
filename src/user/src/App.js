@@ -23,7 +23,7 @@ function (
 			}
 
 			socketInterface = new UserSocketInterface(socketio);
-			socketInterface.connect('http://cloudclapserverr.herokuapp.com');
+			socketInterface.connect('http://cloudclapserver.herokuapp.com');
 
 			var touchstart =  ('ontouchstart' in document.documentElement) ? 'touchstart' : 'click';
 
