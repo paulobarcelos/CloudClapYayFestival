@@ -1,0 +1,18 @@
+{
+  "name": "cloudclapp-clients-yay-festival",
+  "author": "Paulo Barcelos",
+  "dependencies": {
+    "happy-toolkit" : "x",
+    "requirejs" : "x",
+    "node-static": "x"
+    },
+  "license": "WTFPL",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/paulobarcelos/CloudClapYayFestival.git"
+  },
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
