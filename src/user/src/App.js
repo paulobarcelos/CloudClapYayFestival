@@ -1,7 +1,7 @@
 define(
 [
 	'happy/app/BaseApp',
-	'http://cloudclapserver.herokuapp.com/socket.io/socket.io.js',
+	_HOST + '/socket.io/socket.io.js',
 	'UserSocketInterface'
 ],
 function (
@@ -23,7 +23,7 @@ function (
 			}
 
 			socketInterface = new UserSocketInterface(socketio);
-			socketInterface.connect('http://cloudclapserver.herokuapp.com');
+			socketInterface.connect(_HOST);
 
 			var touchstart =  ('ontouchstart' in document.documentElement) ? 'touchstart' : 'click';
 
