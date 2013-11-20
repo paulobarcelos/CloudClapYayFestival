@@ -1,7 +1,7 @@
 define(
 [
 	'happy/app/BaseApp',
-	'http://cloudclapserver.herokuapp.com/socket.io/socket.io.js',
+	_HOST + '/socket.io/socket.io.js',
 	'SoundPlayer'
 ],
 function (
@@ -15,7 +15,7 @@ function (
 
 		self.setup = function(){
 			socketInterface = new SoundPlayer(socketio);
-			socketInterface.connect('http://cloudclapserver.herokuapp.com');			
+			socketInterface.connect(_HOST);			
 		}
 	}
 	App.prototype = new BaseApp();
