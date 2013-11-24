@@ -1,3 +1,9 @@
+*, *:before, *:after {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
 body {
 	position: fixed;
 	width: 100%;
@@ -7,12 +13,29 @@ body {
 	-webkit-user-select: none;
 }
 
-#clap {
-	display: block;
+.screen {
+	position: absolute;
+	top: 0;
+	left: 0;
 	width: 100%;
-	height: 50%;
-	-webkit-appearance:none;
-	background-color: red;
-	color: white;
-	border: 0;
+	height: 100%;
+	background-color: #ff0;
+	padding: 20px;
+}
+
+.main-button,
+.tab-button,
+.push-button {
+	text-align: center;
+}
+
+.text {
+	width: 100%;
+	height: 60%;
+}
+
+.close {
+	position: absolute;
+	top: 20px;
+	right: 20px;
 }
