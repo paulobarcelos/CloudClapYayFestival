@@ -7,7 +7,9 @@ function (
 ){
 	var UserSocketInterface = function(socketio) {
 		var self = this,
-		id,
+		uuid,
+		listens = ['announcement', 'gift'],
+		reports = ['clap', 'wow', 'booh', 'question'],
 		socket,
 		annoucementSignal,
 		loginSignal,
@@ -22,8 +24,10 @@ function (
 				}, 1000);
 			});
 
-			socket.on('connect', onReportIdentity);
-			socket.on('Login', onLogin);
+			socket.on('connect', onConnect);
+			socket.on('login', onLogin);
+			socket.on('annoucement', onAnnouncement);
+			socket.on('gift', onGift);
 
 			loginSignal = new Signal();
 			annoucementSignal = new Signal();
@@ -31,44 +35,49 @@ function (
 			giftCollectedSignal = new Signal();
 		}
 		var clap = function () {
-			socket.emit('Request Clap');
-			console.log('Clap');
+			socket.emit('clap');
+			console.log('clap');
 		}
 		var wow = function() {
-			socket.emit('Resquest Wow');
-			console.log('Wow');
+			socket.emit('wow');
+			console.log('wow');
 		}
 		var booh = function() { 
-			socket.emit('Request Booh');
-			console.log('Booh');
+			socket.emit('booh');
+			console.log('booh');
 		}
 		var question = function(question) { 
-			socket.emit('Ask Question', question);
-			console.log('Ask', question);
+			socket.emit('question', {question:question});
+			console.log('question', {question:question});
 		}
 		var collectGift = function() { 
 			localStorage.clearItem('user_gift');
 			console.log('Gift Collected');
 			giftCollectedSignal.dispatch();
 		}
-		var onReportIdentity = function () {
-			socket.emit('I am a user', localStorage.getItem('user_id'));
+		var onConnect = function () {
+			socket.emit('identity', {
+				uuid: localStorage.getItem('user_uuid'),
+				listens: listens,
+				reports: reports
+			});
 		}
-		var onLogin = function(_id){
-			id = _id;
-			localStorage.setItem('user_id', id);
-			console.log('Login', id);
+		var onLogin = function(_uuid){
+			uuid = _uuid;
+			localStorage.setItem('user_uuid', uuid);
+			console.log('login', uuid);
 			loginSignal.dispatch();
 		}
 		var onAnnouncement = function(data){
-			console.log('Annoucement', data);
+			console.log('announcement', data);
 			annoucementSignal.dispatch(data);
 		}
 		var onGift = function(data){
 			localStorage.setItem('user_gift', data);
-			console.log('Gift', data);
+			console.log('gift', data);
 			giftSignal.dispatch(data);
 		}
+
 		var getGift = function(){
 			return localStorage.getItem('user_gift');
 		}

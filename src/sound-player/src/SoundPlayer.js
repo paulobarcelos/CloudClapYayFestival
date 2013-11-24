@@ -8,7 +8,9 @@ function (
 
 	var SoundPlayer = function(socketio) {
 		var self = this,
-		id,
+		uuid,
+		listens = ['clap', 'wow', 'booh'],
+		reports = [],
 		socket,
 		currentSampler,
 		sounds;
@@ -36,11 +38,11 @@ function (
 				}, 1000);
 			});
 
-			socket.on('Who are you?', onReportIdentity);
-			socket.on('Login', onLogin);
-			socket.on('Execute Clap', clap);
-			socket.on('Execute Wow', wow);
-			socket.on('Execute Booh', booh);
+			socket.on('connect', onConnect);
+			socket.on('login', onLogin);
+			socket.on('clap', clap);
+			socket.on('wow', wow);
+			socket.on('booh', booh);
 		}		
 		var clap = function () {
 			console.log('Clap');
@@ -57,13 +59,17 @@ function (
 			console.log('Booh');
 		}
 
-		var onReportIdentity = function () {
-			socket.emit('I am a sound player', localStorage.getItem('player_id'));
+		var onConnect = function () {
+			socket.emit('identity', {
+				uuid: localStorage.getItem('player_uuid'),
+				listens: listens,
+				reports: reports
+			});
 		}
-		var onLogin = function(_id){
-			id = _id;
-			localStorage.setItem('player_id', id)
-			console.log('Login', id);
+		var onLogin = function(_uuid){
+			uuid = _uuid;
+			localStorage.setItem('player_uuid', uuid)
+			console.log('Login', uuid);
 		}
 		
 

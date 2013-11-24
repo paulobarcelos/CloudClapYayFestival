@@ -166,8 +166,8 @@ function (
 			screen.ask.innerHTML = 'ask';
 			container.appendChild(screen.ask);
 			screen.ask.addEventListener(touchend, function(){
-				if(text.value){
-					socketInterface.question(text.value);
+				if(screen.text.value){
+					socketInterface.question(screen.text.value);
 					switchScreen('main');
 				}
 
