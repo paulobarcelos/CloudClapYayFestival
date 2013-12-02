@@ -26,7 +26,7 @@ function (
 
 			socket.on('connect', onConnect);
 			socket.on('login', onLogin);
-			socket.on('annoucement', onAnnouncement);
+			socket.on('announcement', onAnnouncement);
 			socket.on('gift', onGift);
 
 			loginSignal = new Signal();
@@ -51,7 +51,7 @@ function (
 			console.log('question', {question:question});
 		}
 		var collectGift = function() { 
-			localStorage.clearItem('user_gift');
+			removeItem('user_gift');
 			console.log('Gift Collected');
 			giftCollectedSignal.dispatch();
 		}
@@ -67,16 +67,32 @@ function (
 			localStorage.setItem('user_uuid', uuid);
 			console.log('login', uuid);
 			loginSignal.dispatch();
+
+			var gift = getItem('user_gift');
+			if(gift)onGift(gift);
 		}
-		var onAnnouncement = function(data){
-			console.log('announcement', data);
+		var onAnnouncement = function(data, acknowledgement){
+			if(acknowledgement)acknowledgement();
+			console.log('announcement', data, acknowledgement);
 			annoucementSignal.dispatch(data);
 		}
-		var onGift = function(data){
-			localStorage.setItem('user_gift', data);
+		var onGift = function(data, acknowledgement){
+			if(acknowledgement)acknowledgement();
+			setItem('user_gift', data);
 			console.log('gift', data);
 			giftSignal.dispatch(data);
 		}
+
+		var setItem = function(key, object){
+			localStorage.setItem(key, JSON.stringify(object));
+		}
+		var getItem = function(key){
+			return JSON.parse(localStorage.getItem(key));
+		}
+		var removeItem = function(key){
+			localStorage.removeItem(key);
+		}
+
 
 		var getGift = function(){
 			return localStorage.getItem('user_gift');
