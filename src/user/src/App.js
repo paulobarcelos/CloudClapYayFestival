@@ -20,17 +20,19 @@ function (
 		portraitWarning,
 		mainContainer,
 		currentScreen,
-		screens;
+		screens,
+		totalWows = 10,
+		totalBoohs = 5;
 
 		self.setup = function(){
 			var wowCount = localStorage.getItem('user_wowCount');
 			if(!wowCount && wowCount !== 0) {
-				wowCount = 5;
+				wowCount = totalWows;
 				localStorage.setItem('user_wowCount', wowCount)
 			}
 			var boohCount = localStorage.getItem('user_boohCount');
 			if(!boohCount && boohCount !== 0) {
-				boohCount = 5;
+				boohCount = totalBoohs;
 				localStorage.setItem('user_boohCount', boohCount)
 			}
 
@@ -88,6 +90,21 @@ function (
 			screen.logo = document.createElement('div');
 			screen.logo.id = 'logo';
 			container.appendChild(screen.logo);
+
+			var resetCountTimer;
+			screen.logo.addEventListener(touchstart, function(){
+				resetCountTimer = setTimeout(function(){
+					localStorage.setItem('user_wowCount', totalWows)
+					screen.wowCount.innerHTML = totalWows;
+					localStorage.setItem('user_boohCount', totalBoohs)
+					screen.boohCount.innerHTML = totalBoohs;
+						
+				}, 5000);
+			});
+
+			screen.logo.addEventListener(touchend, function(){
+				clearTimeout(resetCountTimer);
+			});
 
 
 
