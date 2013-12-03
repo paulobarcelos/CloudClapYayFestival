@@ -1,3 +1,4 @@
+
 define(
 [
 	'happy/_libs/signals'
@@ -5,7 +6,7 @@ define(
 function (
 	Signal
 ){
-	var UserSocketInterface = function(socketio) {
+	var FakeUserSocketInterface = function(socketio) {
 		var self = this,
 		uuid,
 		listens = ['announcement', 'gift'],
@@ -57,19 +58,15 @@ function (
 		}
 		var onConnect = function () {
 			socket.emit('identity', {
-				uuid: localStorage.getItem('user_uuid'),
+				uuid: '',
 				listens: listens,
 				reports: reports
 			});
 		}
 		var onLogin = function(_uuid){
 			uuid = _uuid;
-			localStorage.setItem('user_uuid', uuid);
 			console.log('login', uuid);
 			loginSignal.dispatch();
-
-			var gift = getItem('user_gift');
-			if(gift)onGift(gift);
 		}
 		var onAnnouncement = function(data, acknowledgement){
 			if(acknowledgement)acknowledgement();
@@ -78,7 +75,6 @@ function (
 		}
 		var onGift = function(data, acknowledgement){
 			if(acknowledgement)acknowledgement();
-			setItem('user_gift', data);
 			console.log('gift', data);
 			giftSignal.dispatch(data);
 		}
@@ -152,5 +148,5 @@ function (
 		
 		
 	}
-	return UserSocketInterface;
+	return FakeUserSocketInterface;
 });

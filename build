@@ -32,7 +32,7 @@ node node_modules/requirejs/bin/r.js -o cssIn=src/${TARGET}/src/style.css out=di
 file=$(cat dist/$TARGET/index.html)
 
 echo "${file//<!--happy-->*<!--\/happy-->/<link rel="stylesheet" href="src/style.css">
-		<script> var _HOST = 'http://cloudclapserver.herokuapp.com'; </script>
+		<script> var _HOST = 'http://cloudclapserver.herokuapp.com:80'; </script>
 		<script data-main="src/main.js" src="src/require.js"></script>}" >>  dist/$TARGET/.temp
 
 rm dist/$TARGET/index.html
