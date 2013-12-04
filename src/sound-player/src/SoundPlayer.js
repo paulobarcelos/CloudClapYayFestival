@@ -57,7 +57,7 @@ function (
 
 			wows = [];
 			currentWowSampler = 0;
-			for (var i = 0; i < 5; i++) {
+			for (var i = 0; i < 10; i++) {
 				var sound = {};
 				sound.sampler = new WX.Sampler({ source:"audio/wow"+i+".wav" });
 				sound.verb = new WX.ConVerb({source:"audio/ir/960-BigEmptyChurch.wav", mix:0.1 });
@@ -176,10 +176,10 @@ function (
 			
 			if(crowdLevel > 0) return;
 
-			claps[currentClapSampler].verb.mix = 0.05 + Math.random() * 0.1;
+			claps[currentClapSampler].verb.mix = 0.1;//0.05 + Math.random() * 0.1;
 			var g = Math.random() * 2;
 			claps[currentClapSampler].sampler.gain =  g;
-			claps[currentClapSampler].sampler.noteOn(Math.random() * 7 + 57);
+			claps[currentClapSampler].sampler.noteOn(Math.random() * 2 + 59);
 			currentClapSampler++;
 			if(currentClapSampler == claps.length) currentClapSampler = 0;
 		}
@@ -189,12 +189,14 @@ function (
 			if(wps > 10 && wowCounter % 2 != 0) return;
 			if(wps > 20 && wowCounter % 2 != 0) return;
 
-			wows[currentWowSampler].verb.mix = 0.05 + Math.random() * 0.1;
+			var i = Math.round(Math.random() * 9);
+
+			wows[i].verb.mix = 0.05 + Math.random() * 0.1;
 			var g = 1 - Math.random() * 0.4;
-			wows[currentWowSampler].sampler.gain = (g*g) *  guiData['Wow Gain'];
-			wows[currentWowSampler].sampler.noteOn(Math.random() * 7 + 57);
-			currentWowSampler++;
-			if(currentWowSampler == wows.length) currentWowSampler = 0;
+			wows[i].sampler.gain = (g*g) *  guiData['Wow Gain'];
+			wows[i].sampler.noteOn(Math.random() * 7 + 57);
+			//currentWowSampler++;
+			//if(currentWowSampler == wows.length) currentWowSampler = 0;
 		}
 		var booh = function () {
 			boohCounter++;
