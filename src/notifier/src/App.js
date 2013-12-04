@@ -58,7 +58,7 @@ function (
 			
 			screen.to = document.createElement('textarea');
 			screen.to.className = 'to';
-			screen.to.placeholder = 'Enter space separated UUIDs';
+			screen.to.placeholder = 'Send to specific phone? Enter the IDs, separated by space.';
 			container.appendChild(screen.to);
 
 			var urlVars = getUrlVars();
@@ -102,7 +102,7 @@ function (
 			
 			screen.to = document.createElement('textarea');
 			screen.to.className = 'to';
-			screen.to.placeholder = 'Enter space separated UUIDs';
+			screen.to.placeholder = 'Send to specific phone? Enter the IDs, separated by space.';
 			container.appendChild(screen.to);
 
 

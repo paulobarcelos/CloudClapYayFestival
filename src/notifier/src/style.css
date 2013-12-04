@@ -39,8 +39,18 @@ body {
 .title, .content, .to{
 	display: block;
 	width: 100%;
-	font-size: 20px;
 	margin-bottom: 10px
+}
+.title{
+	font-size: 20px;
+}
+.content{
+	font-size: 14px;
+	height: 200px;
+}
+.to{
+	font-size: 14px;
+	font-family: monospace;
 }
 .send{
 	width: 100%;
