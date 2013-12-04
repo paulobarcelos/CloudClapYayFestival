@@ -72,12 +72,12 @@ function (
 			if(gift)onGift(gift);
 		}
 		var onAnnouncement = function(data, acknowledgement){
-			if(acknowledgement)acknowledgement();
+			if(acknowledgement)acknowledgement(localStorage.getItem('user_uuid'));
 			console.log('announcement', data, acknowledgement);
 			annoucementSignal.dispatch(data);
 		}
 		var onGift = function(data, acknowledgement){
-			if(acknowledgement)acknowledgement();
+			if(acknowledgement)acknowledgement(localStorage.getItem('user_uuid'));
 			setItem('user_gift', data);
 			console.log('gift', data);
 			giftSignal.dispatch(data);
