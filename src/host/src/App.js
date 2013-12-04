@@ -129,7 +129,7 @@ function (
 			sendMessage.innerHTML = 'Message';
 			item.appendChild(sendMessage);
 			sendMessage.addEventListener('click', function(){
-				window.location = '/notifier?to=' + data.data.from;
+				window.location = '/notifier/?to=' + data.data.from;
 			});
 
 
