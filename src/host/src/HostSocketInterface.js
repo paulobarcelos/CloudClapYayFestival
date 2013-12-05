@@ -9,7 +9,7 @@ function (
 		var self = this,
 		uuid,
 		listens = ['question'],
-		reports = [],
+		reports = ['stats-data'],
 		socket,
 		feedSignal,
 		questionSignal,
@@ -49,6 +49,8 @@ function (
 			localStorage.setItem('host_uuid', uuid);
 			console.log('login', uuid);
 			loginSignal.dispatch();
+
+			socket.emit('interaction-query-distinct', {field:'uuid', query:{type:'clap'}}, function(data){console.log(data)} );
 		}
 		var onQuestion = function(data){
 			console.log('question', data);
@@ -57,6 +59,10 @@ function (
 		var onFeed = function(data){
 			console.log('feed', data);
 			feedSignal.dispatch(data);
+		}
+		var sendData = function(data){
+			console.log('emit stats-data', data)
+			socket.emit('stats-data', data);
 		}
 		
 		var getLoginSignal = function(){
@@ -83,6 +89,9 @@ function (
 		});
 		Object.defineProperty(self, 'feedSignal', {
 			get: getFeedSignal
+		});
+		Object.defineProperty(self, 'sendData', {
+			value: sendData
 		});
 	}
 	return UserSocketInterface;

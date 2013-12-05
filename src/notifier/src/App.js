@@ -123,7 +123,8 @@ function (
 				}
 				if(!allow) return;
 
-				socketInterface.gift(screen.title.value, screen.content.value, screen.to.value.split(' '));
+				var to = (screen.to.value) ? screen.to.value.split(' ') : '';
+				socketInterface.gift(screen.title.value, screen.content.value, '', 	to);
 				screen.title.value = '';
 				screen.content.value = '';
 				screen.to.value = '';

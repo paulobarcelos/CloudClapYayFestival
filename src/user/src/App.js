@@ -25,7 +25,7 @@ function (
 		totalBoohs = 5;
 
 		self.setup = function(){
-			var wowCount = localStorage.getItem('user_wowCount');
+			/*var wowCount = localStorage.getItem('user_wowCount');
 			if(!wowCount && wowCount !== 0) {
 				wowCount = totalWows;
 				localStorage.setItem('user_wowCount', wowCount)
@@ -34,7 +34,7 @@ function (
 			if(!boohCount && boohCount !== 0) {
 				boohCount = totalBoohs;
 				localStorage.setItem('user_boohCount', boohCount)
-			}
+			}*/
 
 			// Screens
 			portraitWarning = document.createElement('div');
@@ -46,6 +46,7 @@ function (
 			setupQuestionScreen();
 			setupGiftScreen();			
 			setupAnnouncementScreen();
+			setupInfoScreen();
 
 			self.container.appendChild(screens.main.container);
 		
@@ -91,7 +92,7 @@ function (
 			screen.logo.id = 'logo';
 			container.appendChild(screen.logo);
 
-			var resetCountTimer;
+			/*var resetCountTimer;
 			screen.logo.addEventListener(touchstart, function(){
 				resetCountTimer = setTimeout(function(){
 					localStorage.setItem('user_wowCount', totalWows)
@@ -104,7 +105,7 @@ function (
 
 			screen.logo.addEventListener(touchend, function(){
 				clearTimeout(resetCountTimer);
-			});
+			});*/
 
 
 
@@ -129,14 +130,14 @@ function (
 			screen.wow.innerHTML = '<span>yay</span>';
 			container.appendChild(screen.wow);
 			screen.wow.addEventListener(touchstart, function(){
-				var count = localStorage.getItem('user_wowCount');
-				if(count > 0){
+				//var count = localStorage.getItem('user_wowCount');
+				//if(count > 0){
 					socketInterface.wow();
-					count--;
-					screen.wowCount.innerHTML = count;
-					localStorage.setItem('user_wowCount', count)
+					//count--;
+					//screen.wowCount.innerHTML = count;
+					//localStorage.setItem('user_wowCount', count)
 					screen.wow.className = 'wow main-button pressed';					
-				}
+				//}
 				
 				
 			});
@@ -144,34 +145,34 @@ function (
 				screen.wow.className = 'wow main-button';
 			});
 
-			screen.wowCount = document.createElement('div');
+			/*screen.wowCount = document.createElement('div');
 			screen.wowCount.className = 'count';
 			screen.wowCount.innerHTML = localStorage.getItem('user_wowCount');
-			screen.wow.appendChild(screen.wowCount);
+			screen.wow.appendChild(screen.wowCount);*/
 	
 			screen.booh = document.createElement('div');
 			screen.booh.className = 'booh main-button';
 			screen.booh.innerHTML = '<span>boo</span>';
 			container.appendChild(screen.booh);
 			screen.booh.addEventListener(touchstart, function(){
-				var count = localStorage.getItem('user_boohCount');
-				if(count > 0){
+				//var count = localStorage.getItem('user_boohCount');
+				//if(count > 0){
 					socketInterface.booh();
-					count--;
-					screen.boohCount.innerHTML = count;
-					localStorage.setItem('user_boohCount', count)
+					//count--;
+					//screen.boohCount.innerHTML = count;
+					//localStorage.setItem('user_boohCount', count)
 					screen.booh.className = 'booh main-button pressed';
-				}
+				//}
 				
 				
 			});
 			screen.booh.addEventListener(touchend, function(){
 				screen.booh.className = 'booh main-button';
 			});
-			screen.boohCount = document.createElement('div');
+			/*screen.boohCount = document.createElement('div');
 			screen.boohCount.className = 'count';
 			screen.boohCount.innerHTML = localStorage.getItem('user_boohCount');
-			screen.booh.appendChild(screen.boohCount);
+			screen.booh.appendChild(screen.boohCount);*/
 
 
 			screen.tab = document.createElement('div');
@@ -228,8 +229,9 @@ function (
 			screen.text = document.createElement('textarea');
 			screen.text.required= "required" ;
 			screen.text.rows = 6;
+			screen.text.setAttribute('maxlength', 140);
 			screen.text.className = 'text';
-			screen.text.placeholder = 'What do want to know?';
+			screen.text.placeholder = 'Write your question in maximum 140 characters.';
 
 			container.appendChild(screen.text);
 	
@@ -243,9 +245,10 @@ function (
 				if(screen.text.value){
 					socketInterface.question(screen.text.value);
 					screen.text.value = '';
+					var oldPlaceholder = screen.text.placeholder;
 					screen.text.placeholder = 'Thank you for your question!';
 					setTimeout(function(){
-						screen.text.placeholder = 'What do want to know?';
+						screen.text.placeholder = oldPlaceholder;
 					}, 4000);
 				}
 
@@ -320,6 +323,35 @@ function (
 			screen.container.addEventListener(touchend, function(){
 				clearTimeout(collectTimer);
 			});
+		}
+		var setupInfoScreen = function () {
+			var container = document.createElement('div');
+			container.id = 'info-screen';
+			container.className = 'screen';
+
+			var screen = {
+				container: container
+			};
+			screens.info = screen;
+
+			screen.close = document.createElement('div');
+			screen.close.className = 'close';
+			screen.close.innerHTML = '<span>close</span>';
+			container.appendChild(screen.close);
+			screen.close.addEventListener(touchstart, function(){
+				screen.container.parentNode.removeChild(screen.container);
+				currentScreen = null;
+			});
+
+			screen.title = document.createElement('div');
+			screen.title.className = 'title';
+			screen.title.innerHTML = 'The Silent Swede';
+			container.appendChild(screen.title);
+
+			screen.content = document.createElement('div');
+			screen.content.className = 'content';
+			screen.content.innerHTML = '<b>The Silent Swede</b> is a tool created to make it easier for you to speak up! Give your instant feedback to the speaker and/or ask a question!';
+			container.appendChild(screen.content);
 		}
 
 		var fillAnnouncement = function(data){

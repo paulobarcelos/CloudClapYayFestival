@@ -57,7 +57,7 @@ function (
 
 			wows = [];
 			currentWowSampler = 0;
-			for (var i = 0; i < 10; i++) {
+			for (var i = 0; i <= 11; i++) {
 				var sound = {};
 				sound.sampler = new WX.Sampler({ source:"audio/wow"+i+".wav" });
 				sound.verb = new WX.ConVerb({source:"audio/ir/960-BigEmptyChurch.wav", mix:0.1 });
@@ -67,7 +67,7 @@ function (
 
 			boohs = [];
 			currentBoohSampler = 0;
-			for (var i = 0; i < 5; i++) {
+			for (var i = 0; i <= 5; i++) {
 				var sound = {};
 				sound.sampler = new WX.Sampler({ source:"audio/booh"+i+".wav" });
 				sound.verb = new WX.ConVerb({source:"audio/ir/960-BigEmptyChurch.wav", mix:0.1 });
@@ -76,7 +76,7 @@ function (
 			};
 
 			crowds = [];
-			for (var i = 1; i < 6; i++) {
+			for (var i = 1; i <= 5; i++) {
 				(function(){
 					var sound = {};
 					sound.sampler = new WX.Sampler({ source:"audio/crowd"+i+".wav" });
@@ -194,7 +194,7 @@ function (
 			wows[i].verb.mix = 0.05 + Math.random() * 0.1;
 			var g = 1 - Math.random() * 0.4;
 			wows[i].sampler.gain = (g*g) *  guiData['Wow Gain'];
-			wows[i].sampler.noteOn(Math.random() * 7 + 57);
+			wows[i].sampler.noteOn(Math.random() * 6 + 57);
 			//currentWowSampler++;
 			//if(currentWowSampler == wows.length) currentWowSampler = 0;
 		}
@@ -208,7 +208,7 @@ function (
 			boohs[currentBoohSampler].verb.mix = 0.05 + Math.random() * 0.1;
 			var g = 1 - Math.random() * 0.4;
 			boohs[currentBoohSampler].sampler.gain =  (g*g) *  guiData['Booh Gain'];;
-			boohs[currentBoohSampler].sampler.noteOn(Math.random() * 7 + 57);
+			boohs[currentBoohSampler].sampler.noteOn(Math.random() * 6 + 57);
 			currentBoohSampler++;
 			if(currentBoohSampler == boohs.length) currentBoohSampler = 0;
 		}

@@ -1,78 +1,100 @@
-*, *:before, *:after {
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
+@font-face {
+    font-family: 'casablancabold';
+    src: url('../fonts/casablanca_sans_version-03-webfont.eot');
+    src: url('../fonts/casablanca_sans_version-03-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/casablanca_sans_version-03-webfont.woff') format('woff'),
+         url('../fonts/casablanca_sans_version-03-webfont.ttf') format('truetype'),
+         url('../fonts/casablanca_sans_version-03-webfont.svg#casablancabold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'AkkuratBoldRegular';
+    src: url('../fonts/akkurat-bold.eot');
+    src: url('../fonts/akkurat-bold.eot') format('embedded-opentype'),
+         url('../fonts/akkurat-bold.woff') format('woff'),
+         url('../fonts/akkurat-bold.ttf') format('truetype'),
+         url('../fonts/akkurat-bold.svg#AkkuratBoldRegular') format('svg');
+}
+@font-face {
+    font-family: 'AkkuratLightRegular';
+    src: url('../fonts/akkurat-light.eot');
+    src: url('../fonts/akkurat-light.eot') format('embedded-opentype'),
+         url('../fonts/akkurat-light.woff') format('woff'),
+         url('../fonts/akkurat-light.ttf') format('truetype'),
+         url('../fonts/akkurat-light.svg#AkkuratLightRegular') format('svg');
+}
+@font-face {
+    font-family: 'AkkuratNormalRegular';
+    src: url('../fonts/akkurat-normal.eot');
+    src: url('../fonts/akkurat-normal.eot') format('embedded-opentype'),
+         url('../fonts/akkurat-normal.woff') format('woff'),
+         url('../fonts/akkurat-normal.ttf') format('truetype'),
+         url('../fonts/akkurat-normal.svg#AkkuratNormalRegular') format('svg');
 }
 
-body {
-	
+
+body{
+	position: fixed;
+	top:0;
+	left: 0;
 	margin: 0;
 	padding: 0;
-	font-size: 14px;
-	font-family: sans-serif;
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	overflow: hidden;
+	color: #fff;
+}
+#app {
+	position: absolute;
+	width: 1280px;
+	height: 720px;
+	margin-top: 50px;
+	margin-left: 50px;
+	background-color: #000;
+	background-image: url(../img/bg.png);
+	background-size: cover;
+	cursor: none;
+
 }
 
-.screen {
-
+#title{
+	font-family: 'casablancabold';
+	position: absolute;
+	top: 150px;
+	left: 210px;
+	font-size: 59px;
 }
-#feed{
-	left:0;
-	background-color: #eee;
+#questions{
+	font-family: 'AkkuratBoldRegular';
+	width: 248px;
+	position: absolute;
+	left: 820px;
+	top: 293px;
+	font-size: 12.5px;
 }
-#top{
-	display: none;
-}
-
-.list{
-}
-
-.item{
-	padding: 10px;
-	background-color: #fff;
-}
-
-.item:before,
-.item:after {
-    content: " "; /* 1 */
-    display: table; /* 2 */
+.number{
+	position: absolute;
+	font-size: 41px;
+	font-family: 'AkkuratLightRegular';
+	left: 663px;
 }
 
-.item:after {
-    clear: both;
+#clap-count{
+	top: 323px;
 }
-
-
-.time {
-	font-size: 10px;
+#wow-count{
+	top: 391px;
 }
-.question {
-	font-size: 17px;
-	margin: 5px 0;
+#booh-count{
+	top: 456px;
 }
-
-.item:nth-child(odd){
-	background-color: #ffeeee;
-}
-
-.send-message, .remove, .approve{
-	float: right;
-	border:  none;
-	font-family: monospace;
-	margin-left: 15px;
-	padding: 10px;
-}
-.send-message{
-	background-color: gray;
-}
-.remove {
-	background-color: #ff0000;
-}
-.approve {
-	display: none;
-	background-color: green;
-}
-
-#top .approve,
-#top .remove{
-	display: none;
+#chart{
+	width: 240px;
+	height: 240px;
+	position: absolute;
+	top: 265px;
+	left: 212px;
 }

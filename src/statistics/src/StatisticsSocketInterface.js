@@ -8,10 +8,11 @@ function (
 	var StatisticsSocketInterface = function(socketio) {
 		var self = this,
 		uuid,
-		listens = ['clap', 'wow', 'booh'],
+		listens = ['clap', 'wow', 'booh', 'stats-data'],
 		reports = [],
 		socket,
 		loginSignal,
+		dataSignal,
 		clapCountSignal,
 		wowCountSignal,
 		boohCountSignal,
@@ -27,8 +28,10 @@ function (
 
 			socket.on('connect', onConnect);
 			socket.on('login', onLogin);
+			socket.on('stats-data', onData)
 
 			loginSignal = new Signal();
+			dataSignal = new Signal();
 			clapCountSignal = new Signal();
 			wowCountSignal = new Signal();
 			boohCountSignal = new Signal();
@@ -112,6 +115,10 @@ function (
 			console.log('login', uuid);
 			loginSignal.dispatch();
 		}
+		var onData = function(data){
+			console.log('data', data);
+			dataSignal.dispatch(data);
+		}
 		var onClapCount = function(count){
 			console.log('clap count', count);
 			clapCountSignal.dispatch(count);
@@ -131,6 +138,9 @@ function (
 	
 		var getLoginSignal = function(){
 			return loginSignal;
+		}
+		var getDataSignal = function(){
+			return dataSignal;
 		}
 		var getClapCountSignal = function(){
 			return clapCountSignal;
@@ -153,6 +163,9 @@ function (
 		});
 		Object.defineProperty(self, 'loginSignal', {
 			get: getLoginSignal
+		});
+		Object.defineProperty(self, 'dataSignal', {
+			get: getDataSignal
 		});
 		Object.defineProperty(self, 'clapCountSignal', {
 			get: getClapCountSignal
