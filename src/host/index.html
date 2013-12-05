@@ -7,7 +7,7 @@
 		<!--happy-->
 		<link rel="stylesheet" href="src/style.css">
 		<script data-main="src/main.js" src="../../node_modules/requirejs/require.js"></script>
-		<script> var _HOST =  'http://cloudclapserver.herokuapp.com:80'// 'http://paulobarcelos-owc.local:5000'; </script>
+		<script> var _HOST = 'http://paulobarcelos-owc.local:5000'// 'http://cloudclapserver.herokuapp.com:80'// 'http://paulobarcelos-owc.local:5000'; </script>
 		<script>
 			require.config({
 				urlArgs: (new Date()).getTime()
@@ -22,5 +22,11 @@
 		<!--/happy-->
 	</head>
 	<body>
+		<div id="controls">
+			<input type="text" id="speaker" placeholder="Lotta Lundgren"/>
+			<input type="text" id="start-time" placeholder="20:30"/>
+			<input type="text" id="end-time" placeholder="21:30"/>
+			<input type="button" id="go" value="GO"/>
+		</div>
 	</body>
 </html>

@@ -41,6 +41,7 @@ function (
 			self.container.appendChild(screens.feed.container);
 			setupTopScreen();
 			self.container.appendChild(screens.top.container);
+
 		
 			// Socket Interface
 			socketInterface = new HostSocketInterface(socketio);
@@ -58,6 +59,37 @@ function (
 					feed = data;
 				}
 			});
+
+			
+
+			var speaker = document.getElementById('speaker');
+			var startTime = document.getElementById('start-time');
+			var endTime = document.getElementById('end-time');
+			var go =  document.getElementById('go');
+			go.addEventListener('click', function(e){
+				e.preventDefault();
+
+				var title = speaker.value;
+				var from = startTime.value.split(':');
+				var to  = endTime.value.split(':');
+				var questions = [];
+
+				for (var i = 0; i < screens.top.list.children.length; i++) {
+					var q = screens.top.list.children[i]._data.data.question;
+					questions.push(q);
+				};
+				if(!title || from.length != 2 || to.length != 2 || !questions.length){
+					alert('There is an error in the settings!');
+					return;
+				}
+				var data = {
+					title: title,
+					questions: questions,
+					time_from: from,
+					time_to: to
+				};	
+				socketInterface.sendData(data);
+			})
 
 		}
 
@@ -96,6 +128,7 @@ function (
 		var generateItemNode = function(data) {
 			var item = document.createElement('div');
 			item.className = 'item';
+			item._data = data;
 
 			var date = new Date(data.created);
 			var time = document.createElement('div');
@@ -127,7 +160,7 @@ function (
 			var sendMessage = document.createElement('button');
 			sendMessage.className = 'send-message';
 			sendMessage.innerHTML = 'Message';
-			item.appendChild(sendMessage);
+			//item.appendChild(sendMessage);
 			sendMessage.addEventListener('click', function(){
 				window.location = '/notifier/?to=' + data.data.from;
 			});
