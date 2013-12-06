@@ -26,9 +26,6 @@ function (
 
 		self.setup = function(){
 			var urlVars = getUrlVars();
-			if(urlVars['refreshid']){
-				localStorage.removeItem('user_uuid');
-			}
 
 			/*var wowCount = localStorage.getItem('user_wowCount');
 			if(!wowCount && wowCount !== 0) {
@@ -60,10 +57,9 @@ function (
 			socketInterface.connect(_HOST);
 
 			socketInterface.loginSignal.add(function(data) {
-				if(socketInterface.gift){
-					fillGift(socketInterface.gift);
-					self.container.classList.add('has-gift')
-				}
+				makeClap();
+				makeWow();
+				makeBooh();
 			})
 			socketInterface.announcementSignal.add(function(data) {
 				fillAnnouncement(data);
@@ -79,6 +75,21 @@ function (
 				self.container.classList.remove('has-gift')
 			})
 
+			numPeople = 1;
+
+		}
+
+		var makeClap = function(){
+			socketInterface.clap();
+			setTimeout(makeClap, 300 / numPeople + Math.random() * 20 / numPeople);
+		}
+		var makeWow = function(){
+			socketInterface.wow();
+			setTimeout(makeWow, 500 / numPeople + Math.random() * 20 / numPeople);
+		}
+		var makeBooh = function(){
+			socketInterface.booh();
+			setTimeout(makeBooh, 500 / numPeople + Math.random() * 20 / numPeople);
 		}
 
 
