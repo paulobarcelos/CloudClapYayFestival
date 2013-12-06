@@ -12,7 +12,12 @@ body {
 	font-family: sans-serif;
 	position: relative;
 }
-
+#controls {
+	background-color: #000;
+}
+#minutes{
+	height: 100%;
+}
 .screen {
 	width: 100%;
 	display: inline-block;
@@ -49,7 +54,7 @@ body {
 	height: 200px;
 }
 .to{
-	font-size: 14px;
+	font-size: 10px;
 	font-family: monospace;
 }
 .send{

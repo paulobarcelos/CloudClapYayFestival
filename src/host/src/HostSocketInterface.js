@@ -49,8 +49,6 @@ function (
 			localStorage.setItem('host_uuid', uuid);
 			console.log('login', uuid);
 			loginSignal.dispatch();
-
-			socket.emit('interaction-query-distinct', {field:'uuid', query:{type:'clap'}}, function(data){console.log(data)} );
 		}
 		var onQuestion = function(data){
 			console.log('question', data);

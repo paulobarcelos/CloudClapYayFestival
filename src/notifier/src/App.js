@@ -21,17 +21,42 @@ function (
 
 		self.setup = function(){
 
+			var controls = document.createElement('div');
+			controls.id = 'controls';
+			self.container.appendChild(controls);
+
+			var minutes = document.createElement('input');
+			minutes.id = 'minutes';
+			minutes.placeholder = 'Minutes ago';
+			controls.appendChild(minutes);
+
+			var go = document.createElement('button');
+			go.id = 'go';
+			go.innerHTML = 'GET ACTIVE USERS';
+			controls.appendChild(go);
+
+			go.addEventListener('click', function(e){
+				e.preventDefault();
+				socketInterface.requestActiveUsers(parseInt(minutes.value));
+			});
+
+
+
 			// Screen
 			screens = {};
 			setupAnnouncementScreen();
 			self.container.appendChild(screens.announcement.container);
 			setupGiftScreen();
 			self.container.appendChild(screens.gift.container);
+
+
 			
 		
 			// Socket Interface
 			socketInterface = new NotifierSocketInterface(socketio);
 			socketInterface.connect(_HOST);
+
+			socketInterface.usersSignal.add(onUsers);
 		}
 
 		var setupAnnouncementScreen = function () {
@@ -129,6 +154,21 @@ function (
 				screen.content.value = '';
 				screen.to.value = '';
 			});
+		}
+
+		var onUsers = function(users){
+			alert(users.length + ' users found.' + ((users.length > 10) ? ' But only 10 will be selected' : ''));
+
+			var total = (users.length > 10) ? 10: users.length;
+			screens.announcement.to.value = '';
+			screens.gift.to.value = '';
+
+			for (var i = 0; i < total; i++) {
+				var s = users[i];
+				if(i != (total -1)) s += ' ';
+				screens.announcement.to.value += s;
+				screens.gift.to.value += s;
+			};
 		}
 
 		function getUrlVars() {

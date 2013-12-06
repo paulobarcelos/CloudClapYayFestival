@@ -25,6 +25,11 @@ function (
 		totalBoohs = 5;
 
 		self.setup = function(){
+			var urlVars = getUrlVars();
+			if('refreshid'){
+				localStorage.removeItem('user_uuid');
+			}
+
 			/*var wowCount = localStorage.getItem('user_wowCount');
 			if(!wowCount && wowCount !== 0) {
 				wowCount = totalWows;
@@ -113,9 +118,16 @@ function (
 			screen.clap.className = 'clap main-button';
 			screen.clap.innerHTML = '<span>clap</span>';
 			container.appendChild(screen.clap);
+			var clapBlock = false;
 			screen.clap.addEventListener(touchstart, function(){
-				socketInterface.clap();
 				screen.clap.className = 'clap main-button pressed';
+				if(clapBlock) return;
+				clapBlock = true;
+				setTimeout(function(){
+					clapBlock = false;
+				}, 150)
+				socketInterface.clap();
+				
 			});
 			screen.clap.addEventListener(touchend, function(){
 				screen.clap.className = 'clap main-button';
@@ -129,16 +141,16 @@ function (
 			screen.wow.className = 'wow main-button';
 			screen.wow.innerHTML = '<span>yay</span>';
 			container.appendChild(screen.wow);
+			var wowBlock = false;
 			screen.wow.addEventListener(touchstart, function(){
-				//var count = localStorage.getItem('user_wowCount');
-				//if(count > 0){
-					socketInterface.wow();
-					//count--;
-					//screen.wowCount.innerHTML = count;
-					//localStorage.setItem('user_wowCount', count)
-					screen.wow.className = 'wow main-button pressed';					
-				//}
-				
+				screen.wow.className = 'wow main-button pressed';
+									
+				if(wowBlock) return;
+				wowBlock = true;
+				setTimeout(function(){
+					wowBlock = false;
+				}, 200)
+				socketInterface.wow();				
 				
 			});
 			screen.wow.addEventListener(touchend, function(){
@@ -154,15 +166,17 @@ function (
 			screen.booh.className = 'booh main-button';
 			screen.booh.innerHTML = '<span>boo</span>';
 			container.appendChild(screen.booh);
+			var boohBlock = false;
 			screen.booh.addEventListener(touchstart, function(){
-				//var count = localStorage.getItem('user_boohCount');
-				//if(count > 0){
-					socketInterface.booh();
-					//count--;
-					//screen.boohCount.innerHTML = count;
-					//localStorage.setItem('user_boohCount', count)
-					screen.booh.className = 'booh main-button pressed';
-				//}
+				screen.booh.className = 'booh main-button pressed';
+					
+				if(boohBlock) return;
+				boohBlock = true;
+				setTimeout(function(){
+					boohBlock = false;
+				}, 200)
+				socketInterface.booh();
+
 				
 				
 			});
@@ -378,6 +392,14 @@ function (
 			else{
 				self.container.className = '';
 			}
+		}
+
+		function getUrlVars() {
+			var vars = {};
+			var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+				vars[key] = value;
+			});
+			return vars;
 		}
 	}
 	App.prototype = new BaseApp();
