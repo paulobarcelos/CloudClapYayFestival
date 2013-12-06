@@ -11,7 +11,8 @@ function (
 		listens = [],
 		reports = ['announcement', 'gift'],
 		socket,
-		loginSignal;
+		loginSignal,
+		usersSignal;
 
 		var connect = function (host) {
 			socket = socketio.connect(host);
@@ -25,6 +26,7 @@ function (
 			socket.on('login', onLogin);
 
 			loginSignal = new Signal();
+			usersSignal = new Signal();
 		}
 		var announce = function (title, content, color, to) {
 			var data = {
@@ -58,11 +60,34 @@ function (
 			localStorage.setItem('notifier_uuid', uuid);
 			console.log('login', uuid);
 			loginSignal.dispatch();
+
+			
+		}
+
+		var requestActiveUsers = function(minutesAgo){
+			minutesAgo = minutesAgo || 10;
+			socket.emit('interaction-query-distinct', 
+				{
+					field:'clientUuid',
+					query:
+					{ 
+						created: {
+							'$gte' : new Date(Date.now() - 60000 * minutesAgo )
+						}
+					}
+				},
+				function(data){
+					usersSignal.dispatch(data);
+				}
+			);
 		}
 		
 
 		var getLoginSignal = function(){
 			return loginSignal;
+		}
+		var getUsersSignal = function(){
+			return usersSignal;
 		}
 
 		Object.defineProperty(self, 'connect', {
@@ -74,9 +99,15 @@ function (
 		Object.defineProperty(self, 'gift', {
 			value: gift
 		});
+		Object.defineProperty(self, 'requestActiveUsers', {
+			value: requestActiveUsers
+		});
 
 		Object.defineProperty(self, 'loginSignal', {
 			get: getLoginSignal
+		});
+		Object.defineProperty(self, 'usersSignal', {
+			get: getUsersSignal
 		});
 		
 		
